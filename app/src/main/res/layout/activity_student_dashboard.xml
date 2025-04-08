@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/student_drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Main Content -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white">
+
+        <!-- Toolbar -->
+
+        <!-- Welcome Text -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/studentToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:background="@color/colorPrimary"
+            android:elevation="4dp"
+            android:gravity="center_vertical|start"
+            android:paddingHorizontal="8dp"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            <TextView
+                android:id="@+id/studentAppTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:padding="16dp"
+                android:text="SWAG - Student Panel"
+                android:textColor="@android:color/white"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/studentLogoutButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:backgroundTint="@android:color/holo_red_dark"
+                android:padding="17dp"
+                android:text="Logout"
+                android:textColor="@android:color/white" />
+        </androidx.appcompat.widget.Toolbar>
+
+        <TextView
+            android:id="@+id/studentWelcomeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Welcome, Student!"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:padding="24dp" />
+
+        <!-- Dashboard Cards -->
+        <GridLayout
+            android:id="@+id/studentGridLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="24dp"
+            android:columnCount="2"
+            android:rowCount="2"
+            android:layout_gravity="center">
+
+            <!-- Available Quizzes -->
+            <LinearLayout
+                android:id="@+id/cardAvailableQuizzes"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                android:layout_margin="8dp"
+                android:layout_columnWeight="1"
+                android:gravity="center"
+                android:background="@android:color/holo_green_light"
+                android:elevation="4dp"
+                android:padding="16dp"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@android:drawable/ic_menu_edit"
+                    android:layout_gravity="center" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Available Quizzes"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/white"
+                    android:layout_gravity="center"
+                    android:paddingTop="16dp" />
+            </LinearLayout>
+
+            <!-- Attempted Quizzes -->
+            <LinearLayout
+                android:id="@+id/cardAttemptedQuizzes"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                android:layout_margin="8dp"
+                android:layout_columnWeight="1"
+                android:gravity="center"
+                android:background="@android:color/holo_orange_light"
+                android:elevation="4dp"
+                android:padding="16dp"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@android:drawable/ic_menu_recent_history"
+                    android:layout_gravity="center" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Attempted Quizzes"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/white"
+                    android:layout_gravity="center"
+                    android:paddingTop="16dp" />
+            </LinearLayout>
+
+            <!-- View Scores -->
+            <LinearLayout
+                android:id="@+id/cardViewScores"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                android:layout_margin="8dp"
+                android:layout_columnWeight="1"
+                android:gravity="center"
+                android:background="@android:color/holo_purple"
+                android:elevation="4dp"
+                android:padding="16dp"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@android:drawable/ic_menu_info_details"
+                    android:layout_gravity="center" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="View Scores"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/white"
+                    android:layout_gravity="center"
+                    android:paddingTop="16dp" />
+            </LinearLayout>
+
+        </GridLayout>
+    </LinearLayout>
+
+    <!-- Navigation Drawer -->
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/student_nav_view"
+        android:layout_width="250dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:background="@android:color/white">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="24dp">
+
+            <TextView
+                android:id="@+id/studentNavHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Student Menu"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:layout_marginBottom="16dp" />
+
+            <Button
+                android:id="@+id/studentLogoutDrawer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Logout"
+                android:backgroundTint="@android:color/holo_red_light"
+                android:textColor="@android:color/white"
+                android:paddingVertical="12dp" />
+        </LinearLayout>
+    </com.google.android.material.navigation.NavigationView>
+
+</androidx.drawerlayout.widget.DrawerLayout>
