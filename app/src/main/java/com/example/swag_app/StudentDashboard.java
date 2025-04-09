@@ -2,89 +2,93 @@ package com.example.swag_app;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class StudentDashboard extends AppCompatActivity {
+public class StudentDashboard extends BaseActivityStudent {
 
     private DrawerLayout drawerLayout;
-    private Button logoutButton;
-    private Button logoutButtonDrawer;
     private TextView welcomeText;
-    private LinearLayout cardAvailableQuizzes;
-    private LinearLayout cardAttemptedQuizzes;
-    private LinearLayout cardViewScores;
+    private TextView txtQuizCount;
+    private TextView txtAttemptedCount;
+    private TextView txtAverageScore;
+    private MaterialCardView cardAvailableQuizzes;
+    private MaterialCardView cardAttemptedQuizzes;
+    private MaterialCardView cardViewScores;
+    private FloatingActionButton fabStartQuiz;
     private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_student_dashboard);
+        setContentLayout(R.layout.activity_student_dashboard);
+        setToolbarTitle("Student Dashboard");
+        setupNavigationDrawer();
 
         mAuth = FirebaseAuth.getInstance();
 
+        initializeViews();
+        updateUserInfo();
+        setupClickListeners();
+        loadDashboardData();
+    }
+
+    private void initializeViews() {
         drawerLayout = findViewById(R.id.student_drawer_layout);
-        logoutButton = findViewById(R.id.studentLogoutButton);
-        logoutButtonDrawer = findViewById(R.id.studentLogoutDrawer);
         welcomeText = findViewById(R.id.studentWelcomeText);
+        txtQuizCount = findViewById(R.id.txtQuizCount);
+        txtAttemptedCount = findViewById(R.id.txtAttemptedCount);
+        txtAverageScore = findViewById(R.id.txtAverageScore);
+
         cardAvailableQuizzes = findViewById(R.id.cardAvailableQuizzes);
         cardAttemptedQuizzes = findViewById(R.id.cardAttemptedQuizzes);
         cardViewScores = findViewById(R.id.cardViewScores);
+        fabStartQuiz = findViewById(R.id.fabStartQuiz);
+    }
 
+    private void updateUserInfo() {
         FirebaseUser user = mAuth.getCurrentUser();
-        if (user != null) {
-            String email = user.getEmail();
-
-            if (email != null && !email.isEmpty()) {
-                // Extract username before '@'
-                String adminName = email.split("@")[0];
-                welcomeText.setText("Welcome " + adminName + " - Student");
-            } else {
-                welcomeText.setText("Welcome Student");
-            }
+        if (user != null && user.getEmail() != null) {
+            String studentName = user.getEmail().split("@")[0];
+            welcomeText.setText("Welcome, " + studentName + "!");
         } else {
-            welcomeText.setText("Welcome Student");
+            welcomeText.setText("Welcome, Student!");
         }
+    }
 
-        logoutButton.setOnClickListener(v -> logout());
-        logoutButtonDrawer.setOnClickListener(v -> logout());
-
-        // Handle card clicks
+    private void setupClickListeners() {
         cardAvailableQuizzes.setOnClickListener(v -> {
-            Intent intent = new Intent(StudentDashboard.this, AvailableQuizzesActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(this, AvailableQuizzesActivity.class));
             ActivityAnimationUtil.animateForward(this);
         });
 
         cardAttemptedQuizzes.setOnClickListener(v -> {
-            Intent intent = new Intent(StudentDashboard.this, AttemptedQuizzesActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(this, AttemptedQuizzesActivity.class));
             ActivityAnimationUtil.animateForward(this);
         });
 
         cardViewScores.setOnClickListener(v -> {
-            Intent intent = new Intent(StudentDashboard.this, ViewScoresActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(this, ViewScoresActivity.class));
+            ActivityAnimationUtil.animateForward(this);
+        });
+
+        fabStartQuiz.setOnClickListener(v -> {
+            startActivity(new Intent(this, AvailableQuizzesActivity.class));
             ActivityAnimationUtil.animateForward(this);
         });
     }
 
-    private void logout() {
-        // Clear user session or Firebase sign out logic
-        Toast.makeText(this, "Logged out", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(StudentDashboard.this, LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        ActivityAnimationUtil.animateBackward(this);
-        finish();
+    private void loadDashboardData() {
+        // Mock data
+        txtQuizCount.setText("3 quizzes available");
+        txtAttemptedCount.setText("2 quizzes completed");
+        txtAverageScore.setText("Average score: 85%");
     }
 }

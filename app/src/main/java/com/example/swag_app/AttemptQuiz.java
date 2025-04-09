@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AttemptQuiz extends AppCompatActivity {
+public class AttemptQuiz extends BaseActivity {
 
     private TextView questionNumberText, questionText;
     private RadioGroup optionsGroup;
@@ -36,8 +36,9 @@ public class AttemptQuiz extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_attempt_quiz);
-
+        setContentLayout(R.layout.activity_attempt_quiz);
+        setToolbarTitle("Available Quizzes");
+        setupNavigationDrawer();
         // View Initialization
         questionNumberText = findViewById(R.id.questionNumber);
         questionText = findViewById(R.id.questionText);

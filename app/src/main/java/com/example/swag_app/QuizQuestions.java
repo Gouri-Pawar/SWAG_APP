@@ -12,7 +12,7 @@ import com.google.firebase.firestore.*;
 
 import java.util.*;
 
-public class QuizQuestions extends AppCompatActivity {
+public class QuizQuestions extends BaseActivity {
 
     private ListView questionsListView;
     private ArrayAdapter<String> questionsAdapter;
@@ -26,8 +26,9 @@ public class QuizQuestions extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_quiz_questions);
-
+        setContentLayout(R.layout.activity_quiz_questions);
+        setToolbarTitle("Available Quizzes");
+        setupNavigationDrawer();
         db = FirebaseFirestore.getInstance();
 
         Intent intent = getIntent();

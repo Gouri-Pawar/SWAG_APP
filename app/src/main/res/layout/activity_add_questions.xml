@@ -1,121 +1,182 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<androidx.drawerlayout.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:background="@color/white">
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <!-- Main Content -->
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add Question in Quiz"
-            android:fontFamily="sans-serif-condensed-medium"
-            android:textStyle="bold"
-            android:textColor="@color/colorPrimary"
-            android:textSize="30dp"
-            android:layout_gravity="center"/>
-
-        <!-- Question Input -->
-        <EditText
-            android:id="@+id/questionInput"
+        <!-- App Bar with Toolbar -->
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Enter Question"
-            android:padding="12dp"
-            android:background="@drawable/rounded_edit_text"
-            android:textColor="@color/black"
-            android:textColorHint="@color/gray"
-            android:layout_marginTop="50dp"
-            android:inputType="text" />
+            android:layout_height="wrap_content">
 
-        <!-- Options -->
-        <EditText
-            android:id="@+id/optionA"
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorPrimary"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:title="Create Quiz"
+                app:titleTextColor="@android:color/white" />
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <!-- Scrollable Form Content -->
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Option A"
-            android:padding="12dp"
-            android:background="@drawable/rounded_edit_text"
-            android:textColor="@color/black"
-            android:textColorHint="@color/gray"
-            android:layout_marginTop="8dp"
-            android:inputType="text" />
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:background="@color/white">
 
-        <EditText
-            android:id="@+id/optionB"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Option B"
-            android:padding="12dp"
-            android:background="@drawable/rounded_edit_text"
-            android:textColor="@color/black"
-            android:textColorHint="@color/gray"
-            android:layout_marginTop="8dp"
-            android:inputType="text" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
 
-        <EditText
-            android:id="@+id/optionC"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Option C"
-            android:padding="12dp"
-            android:background="@drawable/rounded_edit_text"
-            android:textColor="@color/black"
-            android:textColorHint="@color/gray"
-            android:layout_marginTop="8dp"
-            android:inputType="text" />
+                <!-- Header Title -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Create Quiz"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="40dp"
+                    android:layout_gravity="center"
+                    android:paddingBottom="20dp"/>
 
-        <EditText
-            android:id="@+id/optionD"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Option D"
-            android:padding="12dp"
-            android:background="@drawable/rounded_edit_text"
-            android:textColor="@color/black"
-            android:textColorHint="@color/gray"
-            android:layout_marginTop="8dp"
-            android:inputType="text" />
+                <!-- Quiz Title -->
+                <EditText
+                    android:id="@+id/quizTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Quiz Title"
+                    android:layout_marginTop="20dp"
+                    android:padding="12dp"
+                    android:background="@drawable/rounded_edit_text"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/gray"
+                    android:inputType="text" />
 
-        <!-- Correct Answer Spinner -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Write Correct Answer (A/B/C/D): "
-            android:textSize="16sp"
-            android:textColor="@color/black"
-            android:layout_marginTop="12dp" />
+                <!-- Question Input -->
+                <EditText
+                    android:id="@+id/questionInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter Question"
+                    android:layout_marginTop="12dp"
+                    android:padding="12dp"
+                    android:background="@drawable/rounded_edit_text"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/gray"
+                    android:inputType="text" />
 
-        <EditText
-            android:id="@+id/correctAnswer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Correct Answer"
-            android:padding="12dp"
-            android:background="@drawable/rounded_edit_text"
-            android:textColor="@color/black"
-            android:textColorHint="@color/gray"
-            android:layout_marginTop="12dp"
-            android:inputType="text" />
+                <!-- Options -->
+                <EditText
+                    android:id="@+id/optionA"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Option A"
+                    android:layout_marginTop="8dp"
+                    android:padding="12dp"
+                    android:background="@drawable/rounded_edit_text"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/gray"
+                    android:inputType="text" />
 
-        <!-- Add Question Button -->
-        <Button
-            android:id="@+id/addQuestionButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Add Question"
-            android:backgroundTint="@color/colorPrimary"
-            android:textColor="@color/white"
-            android:layout_marginTop="16dp"
-            android:padding="12dp" />
+                <EditText
+                    android:id="@+id/optionB"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Option B"
+                    android:layout_marginTop="8dp"
+                    android:padding="12dp"
+                    android:background="@drawable/rounded_edit_text"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/gray"
+                    android:inputType="text" />
 
-    </LinearLayout>
+                <EditText
+                    android:id="@+id/optionC"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Option C"
+                    android:layout_marginTop="8dp"
+                    android:padding="12dp"
+                    android:background="@drawable/rounded_edit_text"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/gray"
+                    android:inputType="text" />
 
-</ScrollView>
+                <EditText
+                    android:id="@+id/optionD"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Option D"
+                    android:layout_marginTop="8dp"
+                    android:padding="12dp"
+                    android:background="@drawable/rounded_edit_text"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/gray"
+                    android:inputType="text" />
+
+                <!-- Correct Answer Spinner -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Select Correct Answer:"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="12dp" />
+
+                <Spinner
+                    android:id="@+id/correctAnswerSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/rounded_edit_text" />
+
+                <!-- Add Question Button -->
+                <Button
+                    android:id="@+id/addQuestionButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Add Question"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="16dp"
+                    android:padding="12dp" />
+
+                <!-- Submit Quiz Button -->
+                <Button
+                    android:id="@+id/submitQuizButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Submit Quiz"
+                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="16dp"
+                    android:padding="12dp" />
+            </LinearLayout>
+        </ScrollView>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <!-- Navigation Drawer -->
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="280dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@android:color/white"
+        app:headerLayout="@layout/nav_header_student"
+        app:menu="@menu/student_drawer_menu" />
+
+</androidx.drawerlayout.widget.DrawerLayout>
