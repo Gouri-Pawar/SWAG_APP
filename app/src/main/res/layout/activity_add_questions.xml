@@ -11,22 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- App Bar with Toolbar -->
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/colorPrimary"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:title="Create Quiz"
-                app:titleTextColor="@android:color/white" />
-        </com.google.android.material.appbar.AppBarLayout>
-
         <!-- Scrollable Form Content -->
         <ScrollView
             android:layout_width="match_parent"
@@ -52,19 +36,6 @@
                     android:textSize="40dp"
                     android:layout_gravity="center"
                     android:paddingBottom="20dp"/>
-
-                <!-- Quiz Title -->
-                <EditText
-                    android:id="@+id/quizTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Quiz Title"
-                    android:layout_marginTop="20dp"
-                    android:padding="12dp"
-                    android:background="@drawable/rounded_edit_text"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/gray"
-                    android:inputType="text" />
 
                 <!-- Question Input -->
                 <EditText

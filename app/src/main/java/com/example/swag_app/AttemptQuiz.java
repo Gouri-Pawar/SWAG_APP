@@ -2,18 +2,14 @@ package com.example.swag_app;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
-import android.widget.Button;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
+import android.widget.*;
+import androidx.appcompat.app.AlertDialog;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,15 +27,17 @@ public class AttemptQuiz extends BaseActivity {
     private List<String> userAnswers = new ArrayList<>();
     private int currentQuestionIndex = 0;
     private String quizId;
-    private String quizTitle = ""; // 🔹 Store the quiz title
-
+    private String quizTitle = "";
+    private CountDownTimer countDownTimer;
+    private long timeLeftInMillis = 1 * 60 * 1000; // 1 minute for testing
+    private TextView timerTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentLayout(R.layout.activity_attempt_quiz);
         setToolbarTitle("Available Quizzes");
         setupNavigationDrawer();
-        // View Initialization
+
         questionNumberText = findViewById(R.id.questionNumber);
         questionText = findViewById(R.id.questionText);
         optionsGroup = findViewById(R.id.optionsGroup);
@@ -50,11 +48,14 @@ public class AttemptQuiz extends BaseActivity {
         prevButton = findViewById(R.id.prevButton);
         nextButton = findViewById(R.id.nextButton);
         submitButton = findViewById(R.id.submitButton);
+        timerTextView = findViewById(R.id.timerTextView);
+        startTimer();
 
         quizId = getIntent().getStringExtra("quizId");
 
+
         if (quizId != null) {
-            loadQuestionsFromFirestore(quizId);
+            checkIfAlreadyAttempted();
         } else {
             Toast.makeText(this, "Quiz ID is missing", Toast.LENGTH_SHORT).show();
         }
@@ -93,12 +94,11 @@ public class AttemptQuiz extends BaseActivity {
 
             String uid = user.getUid();
 
-            // 🔽 Result data
             Map<String, Object> resultData = new HashMap<>();
             resultData.put("userId", uid);
             resultData.put("email", user.getEmail());
             resultData.put("quizId", quizId);
-            resultData.put("quizTitle", quizTitle); // 🔹 Add quiz title
+            resultData.put("quizTitle", quizTitle);
             resultData.put("score", correctAnswers);
             resultData.put("totalQuestions", totalQuestions);
             resultData.put("attempted", attemptedQuestions);
@@ -119,7 +119,42 @@ public class AttemptQuiz extends BaseActivity {
                         Toast.makeText(this, "Error storing result: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     });
         });
+    }
 
+    private void checkIfAlreadyAttempted() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user == null) {
+            Toast.makeText(this, "User not authenticated", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
+        String uid = user.getUid();
+
+        db.collection("quizAttempts")
+                .whereEqualTo("userId", uid)
+                .whereEqualTo("quizId", quizId)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    if (!querySnapshot.isEmpty()) {
+                        new AlertDialog.Builder(this)
+                                .setTitle("Quiz Already Attempted")
+                                .setMessage("You have already submitted this quiz. You cannot attempt it again.")
+                                .setCancelable(false)
+                                .setPositiveButton("OK", (dialog, which) -> {
+                                    dialog.dismiss();
+                                    finish();
+                                })
+                                .show();
+                    } else {
+                        loadQuestionsFromFirestore(quizId);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Failed to check attempts: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
     }
 
     private void loadQuestionsFromFirestore(String quizId) {
@@ -129,7 +164,7 @@ public class AttemptQuiz extends BaseActivity {
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
                         questionsList = (List<Map<String, Object>>) documentSnapshot.get("questions");
-                        quizTitle = documentSnapshot.getString("title"); // 🔹 Fetch quiz title
+                        quizTitle = documentSnapshot.getString("title");
 
                         if (questionsList != null && !questionsList.isEmpty()) {
                             for (int i = 0; i < questionsList.size(); i++) {
@@ -219,4 +254,75 @@ public class AttemptQuiz extends BaseActivity {
             default: return -1;
         }
     }
+    private void startTimer() {
+        countDownTimer = new CountDownTimer(timeLeftInMillis, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timeLeftInMillis = millisUntilFinished;
+                updateTimerText();
+            }
+
+            @Override
+            public void onFinish() {
+                Toast.makeText(AttemptQuiz.this, "Time's up! Submitting quiz...", Toast.LENGTH_LONG).show();
+                submitQuizAutomatically();
+            }
+        }.start();
+    }
+
+    private void updateTimerText() {
+        int minutes = (int) (timeLeftInMillis / 1000) / 60;
+        int seconds = (int) (timeLeftInMillis / 1000) % 60;
+        String timeFormatted = String.format("%02d:%02d", minutes, seconds);
+        timerTextView.setText(timeFormatted);
+    }
+
+    private void submitQuizAutomatically() {
+        saveAnswer();
+
+        int totalQuestions = questionsList.size();
+        int correctAnswers = calculateScore();
+        int attemptedQuestions = calculateAttempted();
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null) {
+            Toast.makeText(this, "User not authenticated", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String uid = user.getUid();
+
+        Map<String, Object> resultData = new HashMap<>();
+        resultData.put("userId", uid);
+        resultData.put("email", user.getEmail());
+        resultData.put("quizId", quizId);
+        resultData.put("quizTitle", quizTitle);
+        resultData.put("score", correctAnswers);
+        resultData.put("totalQuestions", totalQuestions);
+        resultData.put("attempted", attemptedQuestions);
+        resultData.put("timestamp", System.currentTimeMillis());
+
+        db.collection("quizAttempts")
+                .add(resultData)
+                .addOnSuccessListener(documentReference -> {
+                    Intent intent = new Intent(AttemptQuiz.this, ResultActivity.class);
+                    intent.putExtra("score", correctAnswers);
+                    intent.putExtra("totalQuestions", totalQuestions);
+                    intent.putExtra("attempted", attemptedQuestions);
+                    startActivity(intent);
+                    finish();
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Error storing result: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
+    }
+
 }

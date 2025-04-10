@@ -7,6 +7,18 @@
     android:padding="24dp"
     android:background="@android:color/white">
 
+    <!-- Timer -->
+    <TextView
+        android:id="@+id/timerTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="60:00"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/holo_red_dark"
+        android:layout_gravity="center"
+        android:layout_marginBottom="16dp" />
+
     <TextView
         android:id="@+id/questionNumber"
         android:layout_width="wrap_content"

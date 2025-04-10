@@ -1,16 +1,14 @@
 package com.example.swag_app;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.*;
+
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.animation.ObjectAnimator;
-import android.animation.AnimatorSet;
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.*;
 import com.google.firebase.firestore.*;
 
 public class LoginActivity extends AppCompatActivity {
@@ -40,7 +38,6 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.loginButton);
         signUpTextView = findViewById(R.id.signUpTextView);
 
-        // Click listeners
         loginButton.setOnClickListener(v -> {
             animateLoginButton();
             loginUser();
@@ -55,47 +52,57 @@ public class LoginActivity extends AppCompatActivity {
     private void loginUser() {
         String email = emailEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
+        String selectedRole = adminRadioButton.isChecked() ? "Admin" : studentRadioButton.isChecked() ? "Student" : "";
 
-        if (email.isEmpty() || password.isEmpty()) {
-            showToast("Please enter both email and password");
+        if (email.isEmpty() || password.isEmpty() || selectedRole.isEmpty()) {
+            showToast("Please fill all fields and select a role");
             return;
         }
 
-        // Authenticate using FirebaseAuth
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        checkUserRole(email);  // Check role after successful login
-                    } else {
-                        showToast("Login failed: " + task.getException().getMessage());
-                    }
-                });
-    }
-
-    private void checkUserRole(String email) {
         db.collection("users")
                 .whereEqualTo("email", email)
                 .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful() && !task.getResult().isEmpty()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            String role = document.getString("role");
-                            if ("admin".equals(role) && adminRadioButton.isChecked()) {
-                                showToast("Logged in as Admin");
-                                startActivity(new Intent(LoginActivity.this, AdminDashboardActivity.class));
-                                finish();
-                            } else if ("student".equals(role) && studentRadioButton.isChecked()) {
-                                showToast("Logged in as Student");
-                                startActivity(new Intent(LoginActivity.this, StudentDashboard.class));
-                                finish();
-                            } else {
-                                showToast("Role mismatch. Please check the correct role.");
-                            }
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (!queryDocumentSnapshots.isEmpty()) {
+                        DocumentSnapshot document = queryDocumentSnapshots.getDocuments().get(0);
+                        String storedRole = document.getString("role");
+
+                        if (!selectedRole.equals(storedRole)) {
+                            showToast("Role mismatch. Please select the correct role.");
+                            return;
                         }
+
+                        mAuth.signInWithEmailAndPassword(email, password)
+                                .addOnCompleteListener(task -> {
+                                    if (task.isSuccessful()) {
+                                        FirebaseUser user = mAuth.getCurrentUser();
+                                        if (user != null && user.isEmailVerified()) {
+                                            navigateToDashboard(storedRole);
+                                        } else {
+                                            mAuth.signOut(); // logout unverified user
+                                            showToast("Please verify your email before logging in.");
+                                        }
+                                    } else {
+                                        showToast("Login failed: " + task.getException().getMessage());
+                                    }
+                                });
+
                     } else {
-                        showToast("User role not found. Please sign up.");
+                        showToast("User not found. Please sign up.");
                     }
-                });
+                })
+                .addOnFailureListener(e -> showToast("Error checking role: " + e.getMessage()));
+    }
+
+    private void navigateToDashboard(String role) {
+        if ("Admin".equals(role)) {
+            showToast("Logged in as Admin");
+            startActivity(new Intent(LoginActivity.this, AdminDashboardActivity.class));
+        } else {
+            showToast("Logged in as Student");
+            startActivity(new Intent(LoginActivity.this, StudentDashboard.class));
+        }
+        finish();
     }
 
     private void showToast(String message) {

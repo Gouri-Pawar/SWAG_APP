@@ -112,7 +112,7 @@ public class BaseActivityStudent extends AppCompatActivity implements Navigation
         if (id == R.id.nav_dashboard) {
             startActivity(new Intent(this, StudentDashboard.class));
         } else if (id == R.id.nav_quizzes) {
-            startActivity(new Intent(this, AttemptedQuizzesActivity.class));
+            startActivity(new Intent(this, AvailableQuizzesActivity.class));
         }
         else if (id == R.id.nav_scores) {
             startActivity(new Intent(this, ViewScoresActivity.class));
