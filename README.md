@@ -106,8 +106,6 @@ SWAG_BRAIN leverages Firebase for a seamless cloud experience:
 ## 📸 Screenshots
 
 <div align="center">
-![Screenshot_20250410_110315](https://github.com/user-attachments/assets/ef38471f-cea8-4c9b-9aa7-fd60c0044e74)
-![Screenshot_20250410_110432](https://github.com/user-attachments/assets/fd5c870d-3759-4403-8efa-ea5de6a6892f)
 <img src ="assests/Splash_Screen.jpg" width="200"/> &nbsp;&nbsp;&nbsp;&nbsp;
 <img src="assests/login_screen.jpg" width="200" /> &nbsp;&nbsp;&nbsp;&nbsp;
 <img src="assests/admin_dashboard.jpg" width="200" /> &nbsp;&nbsp;&nbsp;&nbsp;
@@ -117,6 +115,8 @@ SWAG_BRAIN leverages Firebase for a seamless cloud experience:
 <img src="assests/quiz_screen.jpg" width="200" /> &nbsp;&nbsp;&nbsp;&nbsp;
 <img src="assests/student_score.jpg" width="200" /> &nbsp;&nbsp;&nbsp;&nbsp;
 </div>
+![Screenshot_20250410_110315](https://github.com/user-attachments/assets/5b3fc3d0-c79b-4ce7-815c-f14726a347cf)
+![Screenshot_20250410_110315](https://github.com/user-attachments/assets/ba44317b-9ab2-4b40-ab78-1c35e6125271)
 
 ## 📞 Contact
 
