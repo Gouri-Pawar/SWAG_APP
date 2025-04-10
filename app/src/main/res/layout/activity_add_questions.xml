@@ -29,7 +29,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Create Quiz"
+                    android:text="Add Question"
                     android:fontFamily="sans-serif-condensed-medium"
                     android:textStyle="bold"
                     android:textColor="@color/colorPrimary"
@@ -43,12 +43,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter Question"
-                    android:layout_marginTop="12dp"
                     android:padding="12dp"
+                    android:minLines="5"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
                     android:background="@drawable/rounded_edit_text"
                     android:textColor="@color/black"
                     android:textColorHint="@color/gray"
-                    android:inputType="text" />
+                    android:layout_marginTop="12dp" />
 
                 <!-- Options -->
                 <EditText
@@ -126,16 +128,6 @@
                     android:layout_marginTop="16dp"
                     android:padding="12dp" />
 
-                <!-- Submit Quiz Button -->
-                <Button
-                    android:id="@+id/submitQuizButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Submit Quiz"
-                    android:backgroundTint="@color/colorPrimaryDark"
-                    android:textColor="@color/white"
-                    android:layout_marginTop="16dp"
-                    android:padding="12dp" />
             </LinearLayout>
         </ScrollView>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

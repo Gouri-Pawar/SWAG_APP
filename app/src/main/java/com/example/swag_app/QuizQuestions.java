@@ -4,24 +4,24 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-import androidx.appcompat.app.AppCompatActivity;
-import com.google.firebase.firestore.*;
 
-import java.util.*;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class QuizQuestions extends BaseActivity {
 
     private ListView questionsListView;
-    private ArrayAdapter<String> questionsAdapter;
-    private ArrayList<String> questionsDisplayList; // For showing Q & A
-    private ArrayList<Map<String, Object>> questionsDataList; // Full question data
+    private QuizQuestionAdapter customAdapter;
+    private ArrayList<Map<String, Object>> questionsDataList;
     private FirebaseFirestore db;
     private String quizTitle, quizId;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +44,9 @@ public class QuizQuestions extends BaseActivity {
         setTitle(quizTitle);
 
         questionsListView = findViewById(R.id.questionsListView);
-        questionsDisplayList = new ArrayList<>();
         questionsDataList = new ArrayList<>();
-        questionsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, questionsDisplayList);
-        questionsListView.setAdapter(questionsAdapter);
+        customAdapter = new QuizQuestionAdapter(this, questionsDataList);
+        questionsListView.setAdapter(customAdapter);
 
         fetchQuestions(quizId);
 
@@ -64,31 +63,9 @@ public class QuizQuestions extends BaseActivity {
                     if (document.exists()) {
                         List<Map<String, Object>> questionsArray = (List<Map<String, Object>>) document.get("questions");
                         if (questionsArray != null && !questionsArray.isEmpty()) {
-                            questionsDisplayList.clear();
                             questionsDataList.clear();
-
-                            for (Map<String, Object> questionObj : questionsArray) {
-                                questionsDataList.add(questionObj); // Store full object
-
-                                String questionText = (String) questionObj.get("question");
-                                List<String> options = (List<String>) questionObj.get("options");
-                                String correct = (String) questionObj.get("correctAnswer");
-
-                                StringBuilder display = new StringBuilder();
-                                display.append("Q: ").append(questionText).append("\n");
-
-                                if (options != null && options.size() == 4) {
-                                    display.append("A: ").append(options.get(0)).append("\n");
-                                    display.append("B: ").append(options.get(1)).append("\n");
-                                    display.append("C: ").append(options.get(2)).append("\n");
-                                    display.append("D: ").append(options.get(3)).append("\n");
-                                }
-
-                                display.append("Correct: ").append(correct);
-                                questionsDisplayList.add(display.toString());
-                            }
-
-                            questionsAdapter.notifyDataSetChanged();
+                            questionsDataList.addAll(questionsArray);
+                            customAdapter.notifyDataSetChanged();
                         } else {
                             Toast.makeText(this, "No questions found", Toast.LENGTH_SHORT).show();
                         }
@@ -111,10 +88,8 @@ public class QuizQuestions extends BaseActivity {
                 .show();
     }
 
-
     private void deleteQuestion(int position) {
-
-        questionsDataList.remove(position); // Remove from memory
+        questionsDataList.remove(position);
         db.collection("quizzes").document(quizId)
                 .update("questions", questionsDataList)
                 .addOnSuccessListener(aVoid -> {
@@ -125,6 +100,5 @@ public class QuizQuestions extends BaseActivity {
                     Log.e("QuizQuestions", "Failed to delete question", e);
                     Toast.makeText(this, "Failed to delete question", Toast.LENGTH_SHORT).show();
                 });
-        questionsAdapter.notifyDataSetChanged();
     }
 }

@@ -82,26 +82,14 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         if (user != null && user.getEmail() != null) {
             String email = user.getEmail();
 
-            drawerUserEmail.setText(email); // Always show email
+            drawerUserEmail.setText(email); // ✅ Show full email
 
-            db.collection("users")
-                    .whereEqualTo("email", email)
-                    .get()
-                    .addOnSuccessListener(querySnapshots -> {
-                        if (!querySnapshots.isEmpty()) {
-                            for (QueryDocumentSnapshot document : querySnapshots) {
-                                String name = email.split("@")[0];
-                                drawerUserName.setText(name);
-                            }
-                        } else {
-                            // fallback if no document found
-                            drawerUserName.setText(email.split("@")[0]);
-                        }
-                    })
-                    .addOnFailureListener(e -> {
-                        Toast.makeText(this, "Failed to fetch user info", Toast.LENGTH_SHORT).show();
-                        drawerUserName.setText(email.split("@")[0]);
-                    });
+            // ✅ Extract name from email
+            String name = email.split("@")[0];
+
+            // ✅ Optional: Capitalize the first letter
+            String capitalized = name.substring(0, 1).toUpperCase() + name.substring(1);
+            drawerUserName.setText(capitalized);
         }
     }
 
