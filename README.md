@@ -1,7 +1,10 @@
 # SWAG_BRAIN 🧠
 > An intelligent quiz application for educational assessment and progress tracking
 
-<img src= "https://img.freepik.com/premium-vector/quiz-logo-quiz-time-label-with-question-mark_349999-2046.jpg" width="300" height="200">
+![logo](https://github.com/user-attachments/assets/42d0c543-1bc3-425d-bf11-6556fec724a4)
+
+
+<img src= "logo" width="300" height="200">
 
 
 ## 📱 Overview
