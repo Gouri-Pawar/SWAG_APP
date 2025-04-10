@@ -120,7 +120,7 @@ SWAG_BRAIN leverages Firebase for a seamless cloud experience:
 
 Project Creator - Samruddhi Rahegaonkar and Gouri Pawar.
 
-Project Link: [https://github.com/yourusername/swagbrain](https://github.com/yourusername/swagbrain)
+Project Link: [[https://github.com/yourusername/swagbrain](https://github.com/yourusername/swagbrain)](https://github.com/Gouri-Pawar/SWAG_APP)
 
 ---
 
