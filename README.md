@@ -1,10 +1,7 @@
 # SWAG_BRAIN 🧠
 > An intelligent quiz application for educational assessment and progress tracking
 
-![logo](https://github.com/user-attachments/assets/42d0c543-1bc3-425d-bf11-6556fec724a4)
-
-
-<img src= "[logo](https://github.com/user-attachments/assets/42d0c543-1bc3-425d-bf11-6556fec724a4)" width="300" height="200">
+<img src= "logo.jpg" width="300" height="200">
 
 
 ## 📱 Overview
@@ -109,10 +106,15 @@ SWAG_BRAIN leverages Firebase for a seamless cloud experience:
 ## 📸 Screenshots
 
 <div align="center">
-<img src="https://via.placeholder.com/250x500?text=Login+Screen" width="200" />
-<img src="https://via.placeholder.com/250x500?text=Admin+Dashboard" width="200" />
-<img src="https://via.placeholder.com/250x500?text=Quiz+Interface" width="200" />
-<img src="https://via.placeholder.com/250x500?text=Progress+Charts" width="200" />
+<img src ="Splash_Screen.jpg" width="200"/>
+<img src="login_screen.jpg" width="200" />
+<img src="admin_dashboard.jpg" width="200" />
+<img src="student_progress.jpg" width="200" />
+<img src="student_dashboard.jpg" width="200" />
+<img src="available_quiz.jpg" width="200" />
+<img src="quiz_screen.jpg" width="200" />
+<img src="student_score.jpg" width="200" />
+   
 </div>
 
 ## 📞 Contact
