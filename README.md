@@ -1,7 +1,7 @@
 # SWAG_BRAIN 🧠
 > An intelligent quiz application for educational assessment and progress tracking
 
-<img src= "logo.jpg" width="300" height="200">
+<img src= "assests/logo.jpg" width="300" height="200">
 
 
 ## 📱 Overview
