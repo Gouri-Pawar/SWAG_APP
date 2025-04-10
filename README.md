@@ -4,7 +4,7 @@
 ![logo](https://github.com/user-attachments/assets/42d0c543-1bc3-425d-bf11-6556fec724a4)
 
 
-<img src= "logo" width="300" height="200">
+<img src= "[logo](https://github.com/user-attachments/assets/42d0c543-1bc3-425d-bf11-6556fec724a4)" width="300" height="200">
 
 
 ## 📱 Overview
