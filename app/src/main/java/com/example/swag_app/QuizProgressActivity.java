@@ -39,7 +39,7 @@ public class QuizProgressActivity extends BaseActivity {
         adapter = new ProgressAdapter(progressList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
-        setToolbarTitle("Available Quizzes");
+        setToolbarTitle("Track Progress");
         setupNavigationDrawer();
         Button exportBtn = findViewById(R.id.btnExportPdf);
         exportBtn.setOnClickListener(v -> generatePdf(progressList));

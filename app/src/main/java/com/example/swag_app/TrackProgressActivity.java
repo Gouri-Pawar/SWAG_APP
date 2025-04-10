@@ -51,7 +51,7 @@ public class TrackProgressActivity extends BaseActivity {
 
         db = FirebaseFirestore.getInstance();
         fetchQuizzes();
-        setToolbarTitle("Available Quizzes");
+        setToolbarTitle("View Quiz Attempts");
         setupNavigationDrawer();
     }
 
