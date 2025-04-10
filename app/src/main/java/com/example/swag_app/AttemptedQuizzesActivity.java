@@ -28,7 +28,7 @@ public class AttemptedQuizzesActivity extends BaseActivityStudent {
 
         recyclerView = findViewById(R.id.recyclerViewAttempted);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        setToolbarTitle("Available Quizzes");
+        setToolbarTitle("Attempted Quizzes");
         setupNavigationDrawer();
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();

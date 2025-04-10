@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AttemptQuiz extends BaseActivity {
+public class AttemptQuiz extends BaseActivityStudent {
 
     private TextView questionNumberText, questionText;
     private RadioGroup optionsGroup;
@@ -35,7 +35,7 @@ public class AttemptQuiz extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentLayout(R.layout.activity_attempt_quiz);
-        setToolbarTitle("Available Quizzes");
+        setToolbarTitle("Solve Quizzes");
         setupNavigationDrawer();
 
         questionNumberText = findViewById(R.id.questionNumber);

@@ -6,13 +6,9 @@
             android:icon="@drawable/ic_dashboard"
             android:title="Dashboard" />
         <item
-            android:id="@+id/nav_quizzes"
-            android:icon="@drawable/ic_quiz"
-            android:title="Available Quizzes" />
-        <item
             android:id="@+id/nav_history"
             android:icon="@drawable/ic_history"
-            android:title="Quiz History" />
+            android:title="History" />
         <item
             android:id="@+id/nav_scores"
             android:icon="@drawable/ic_score"
@@ -20,10 +16,6 @@
     </group>
     <item android:title="Account">
         <menu>
-            <item
-                android:id="@+id/nav_profile"
-                android:icon="@drawable/ic_profile"
-                android:title="My Profile" />
             <item
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/ic_logout"

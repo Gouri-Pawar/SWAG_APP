@@ -7,18 +7,6 @@
     tools:context=".QuizQuestions"
     android:background="@android:color/white">
 
-    <!-- Toolbar -->
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        android:elevation="4dp"
-        app:title="Quiz Questions"
-        app:titleTextColor="@android:color/white"
-        android:padding="16dp"
-        tools:ignore="MissingConstraints" />
 
     <!-- ListView for displaying questions -->
     <ListView
@@ -26,7 +14,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

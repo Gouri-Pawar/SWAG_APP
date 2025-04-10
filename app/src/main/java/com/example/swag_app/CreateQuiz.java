@@ -18,11 +18,7 @@ import com.google.firebase.firestore.*;
 
 import java.util.*;
 
-public class CreateQuiz extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
-    private DrawerLayout drawerLayout;
-    private NavigationView navigationView;
-    private Toolbar toolbar;
+public class CreateQuiz extends BaseActivity {
 
     private EditText quizTitle, questionInput, optionA, optionB, optionC, optionD;
     private Spinner correctAnswerSpinner;
@@ -32,40 +28,17 @@ public class CreateQuiz extends AppCompatActivity implements NavigationView.OnNa
     private FirebaseAuth mAuth;
     private List<Map<String, Object>> questionList = new ArrayList<>();
 
-    private TextView drawerUserName, drawerUserEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_quiz);
+        setContentLayout(R.layout.activity_create_quiz);
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
-        // Toolbar setup
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        // Drawer setup
-        drawerLayout = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.nav_view);
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawerLayout, toolbar,
-                R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close
-        );
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
-        navigationView.setNavigationItemSelectedListener(this);
-
-        // Header views
-        View headerView = navigationView.getHeaderView(0);
-        drawerUserName = headerView.findViewById(R.id.textViewStudentName);
-        drawerUserEmail = headerView.findViewById(R.id.textViewStudentEmail);
-
-        fetchUserDetails();
-
+        setToolbarTitle("Create Quiz");
+        setupNavigationDrawer();
         // UI components
         quizTitle = findViewById(R.id.quizTitle);
         questionInput = findViewById(R.id.questionInput);
@@ -88,33 +61,6 @@ public class CreateQuiz extends AppCompatActivity implements NavigationView.OnNa
 
         // Submit Quiz
         submitQuizButton.setOnClickListener(v -> submitQuiz());
-    }
-
-    private void fetchUserDetails() {
-        FirebaseUser user = mAuth.getCurrentUser();
-        if (user != null && user.getEmail() != null) {
-            String email = user.getEmail();
-
-            db.collection("users")
-                    .whereEqualTo("email", email)
-                    .get()
-                    .addOnSuccessListener(querySnapshots -> {
-                        if (!querySnapshots.isEmpty()) {
-                            for (QueryDocumentSnapshot document : querySnapshots) {
-                                String name = email.split("@")[0];
-                                String role = document.getString("role");
-
-                                drawerUserName.setText(name);
-                                drawerUserEmail.setText(email);
-                            }
-                        }
-                    })
-                    .addOnFailureListener(e -> {
-                        String name = email.split("@")[0];
-                        drawerUserName.setText(name);
-                        drawerUserEmail.setText(email);
-                    });
-        }
     }
 
     private void addQuestion() {
@@ -174,31 +120,5 @@ public class CreateQuiz extends AppCompatActivity implements NavigationView.OnNa
                         Toast.makeText(this, "Failed to submit quiz.", Toast.LENGTH_SHORT).show();
                     }
                 });
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.nav_dashboard) {
-            startActivity(new Intent(this, AdminDashboardActivity.class));
-        } else if (id == R.id.nav_logout) {
-            FirebaseAuth.getInstance().signOut();
-            Toast.makeText(this, "Logged out", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this, LoginActivity.class));
-            finish();
-        }
-
-        drawerLayout.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
     }
 }

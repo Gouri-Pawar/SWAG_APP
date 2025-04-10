@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.*;
 
-public class QuizDetailsActivity extends AppCompatActivity {
+public class QuizDetailsActivity extends BaseActivityStudent {
 
     private TextView tvQuizTitle;
     private TextView tvAttemptedCount;
@@ -27,8 +27,9 @@ public class QuizDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_quiz_details);
-
+        setContentLayout(R.layout.activity_quiz_details);
+        setToolbarTitle("Congratulations !");
+        setupNavigationDrawer();
         // Initialize Firebase
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();

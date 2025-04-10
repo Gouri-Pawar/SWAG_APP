@@ -26,7 +26,7 @@ import com.google.firebase.firestore.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PastQuizzes extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class PastQuizzes extends BaseActivity{
 
     private FirebaseFirestore db;
     private ListView quizListView;
@@ -35,59 +35,14 @@ public class PastQuizzes extends AppCompatActivity implements NavigationView.OnN
     private ArrayAdapter<String> adapter;
     private FloatingActionButton addQuestionFab;
 
-    private DrawerLayout drawerLayout;
-    private NavigationView navigationView;
-    private FirebaseAuth mAuth;
-    private TextView drawerUserName, drawerUserEmail;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_past_quizzes);
-
+        setContentLayout(R.layout.activity_past_quizzes);
+        setToolbarTitle("Previous Quizzes");
+        setupNavigationDrawer();
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
-
-        // Drawer + Toolbar setup
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        drawerLayout = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawerLayout, toolbar,
-                R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
-
-        // Drawer header
-        View headerView = navigationView.getHeaderView(0);
-        drawerUserName = headerView.findViewById(R.id.textViewStudentName);
-        drawerUserEmail = headerView.findViewById(R.id.textViewStudentEmail);
-
-        // Set user info
-        FirebaseUser user = mAuth.getCurrentUser();
-        if (user != null && user.getEmail() != null) {
-            String email = user.getEmail();
-
-            db.collection("users")
-                    .whereEqualTo("email", email)
-                    .get()
-                    .addOnSuccessListener(querySnapshots -> {
-                        if (!querySnapshots.isEmpty()) {
-                            String name = email.split("@")[0];
-                            drawerUserName.setText(name);
-                            drawerUserEmail.setText(email);
-                        }
-                    })
-                    .addOnFailureListener(e -> {
-                        drawerUserName.setText("User");
-                        drawerUserEmail.setText(user.getEmail());
-                    });
-        }
 
         quizListView = findViewById(R.id.pastQuizzesListView);
         addQuestionFab = findViewById(R.id.addQuestionFab);
@@ -174,35 +129,4 @@ public class PastQuizzes extends AppCompatActivity implements NavigationView.OnN
                         Toast.makeText(PastQuizzes.this, "Failed to delete quiz", Toast.LENGTH_SHORT).show());
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.nav_dashboard) {
-            startActivity(new Intent(this, AdminDashboardActivity.class));
-        } else if (id == R.id.nav_quizzes) {
-            startActivity(new Intent(this, AvailableQuizzesActivity.class));
-        } else if (id == R.id.nav_history) {
-            startActivity(new Intent(this, PastQuizzes.class));
-        } else if (id == R.id.nav_scores) {
-            startActivity(new Intent(this, TrackProgressActivity.class));
-        } else if (id == R.id.nav_logout) {
-            mAuth.signOut();
-            Toast.makeText(this, "Logged out", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this, LoginActivity.class));
-            finish();
-        }
-
-        drawerLayout.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
 }

@@ -14,7 +14,7 @@ import com.google.firebase.firestore.Query;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AvailableQuizzesActivity extends BaseActivity {
+public class AvailableQuizzesActivity extends BaseActivityStudent {
 
     private RecyclerView recyclerView;
     private QuizAdapter quizAdapter;

@@ -111,8 +111,6 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.nav_dashboard) {
             startActivity(new Intent(this, AdminDashboardActivity.class));
-        } else if (id == R.id.nav_quizzes) {
-            startActivity(new Intent(this, AvailableQuizzesActivity.class));
         } else if (id == R.id.nav_history) {
             startActivity(new Intent(this, PastQuizzes.class));
         } else if (id == R.id.nav_scores) {
