@@ -114,13 +114,16 @@ SWAG_BRAIN leverages Firebase for a seamless cloud experience:
 <img src="assests/available_quiz.jpg" width="200" /> &nbsp;&nbsp;&nbsp;&nbsp;
 <img src="assests/quiz_screen.jpg" width="200" /> &nbsp;&nbsp;&nbsp;&nbsp;
 <img src="assests/student_score.jpg" width="200" /> &nbsp;&nbsp;&nbsp;&nbsp;
+<img src="assests/Admincode.png" width="200" /> &nbsp;&nbsp;&nbsp;&nbsp;
+<img src="assests/verification.png" width="200" /> &nbsp;&nbsp;&nbsp;&nbsp;
+
 </div>
 
 ## 📞 Contact
 
 Project Creator - Samruddhi Rahegaonkar and Gouri Pawar.
 
-Project Link: [[https://github.com/yourusername/swagbrain](https://github.com/yourusername/swagbrain)](https://github.com/Gouri-Pawar/SWAG_APP)
+Project Link: (https://github.com/Gouri-Pawar/SWAG_APP)
 
 ---
 
