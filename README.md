@@ -106,6 +106,8 @@ SWAG_BRAIN leverages Firebase for a seamless cloud experience:
 ## 📸 Screenshots
 
 <div align="center">
+![Screenshot_20250410_110315](https://github.com/user-attachments/assets/ef38471f-cea8-4c9b-9aa7-fd60c0044e74)
+![Screenshot_20250410_110432](https://github.com/user-attachments/assets/fd5c870d-3759-4403-8efa-ea5de6a6892f)
 <img src ="assests/Splash_Screen.jpg" width="200"/> &nbsp;&nbsp;&nbsp;&nbsp;
 <img src="assests/login_screen.jpg" width="200" /> &nbsp;&nbsp;&nbsp;&nbsp;
 <img src="assests/admin_dashboard.jpg" width="200" /> &nbsp;&nbsp;&nbsp;&nbsp;
@@ -120,7 +122,7 @@ SWAG_BRAIN leverages Firebase for a seamless cloud experience:
 
 Project Creator - Samruddhi Rahegaonkar and Gouri Pawar.
 
-Project Link: [[https://github.com/yourusername/swagbrain](https://github.com/yourusername/swagbrain)](https://github.com/Gouri-Pawar/SWAG_APP)
+Project Link: (https://github.com/Gouri-Pawar/SWAG_APP)
 
 ---
 
