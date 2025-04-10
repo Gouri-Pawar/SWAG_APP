@@ -106,15 +106,14 @@ SWAG_BRAIN leverages Firebase for a seamless cloud experience:
 ## 📸 Screenshots
 
 <div align="center">
-<img src ="assests/Splash_Screen.jpg" width="200"/>
-<img src="assests/login_screen.jpg" width="200" />
-<img src="assests/admin_dashboard.jpg" width="200" />
-<img src="assests/student_progress.jpg" width="200" />
-<img src="assests/student_dashboard.jpg" width="200" />
-<img src="assests/available_quiz.jpg" width="200" />
-<img src="assests/quiz_screen.jpg" width="200" />
-<img src="assests/student_score.jpg" width="200" />
-   
+<img src ="assests/Splash_Screen.jpg" width="200"/> &nbsp;&nbsp;&nbsp;&nbsp;
+<img src="assests/login_screen.jpg" width="200" /> &nbsp;&nbsp;&nbsp;&nbsp;
+<img src="assests/admin_dashboard.jpg" width="200" /> &nbsp;&nbsp;&nbsp;&nbsp;
+<img src="assests/student_progress.jpg" width="200" /> &nbsp;&nbsp;&nbsp;&nbsp;
+<img src="assests/student_dashboard.jpg" width="200" /> &nbsp;&nbsp;&nbsp;&nbsp;
+<img src="assests/available_quiz.jpg" width="200" /> &nbsp;&nbsp;&nbsp;&nbsp;
+<img src="assests/quiz_screen.jpg" width="200" /> &nbsp;&nbsp;&nbsp;&nbsp;
+<img src="assests/student_score.jpg" width="200" /> &nbsp;&nbsp;&nbsp;&nbsp;
 </div>
 
 ## 📞 Contact
