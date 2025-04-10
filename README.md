@@ -114,6 +114,9 @@ SWAG_BRAIN leverages Firebase for a seamless cloud experience:
 <img src="assests/available_quiz.jpg" width="200" /> &nbsp;&nbsp;&nbsp;&nbsp;
 <img src="assests/quiz_screen.jpg" width="200" /> &nbsp;&nbsp;&nbsp;&nbsp;
 <img src="assests/student_score.jpg" width="200" /> &nbsp;&nbsp;&nbsp;&nbsp;
+<img src="assests/Admincode.png" width="200" /> &nbsp;&nbsp;&nbsp;&nbsp;
+<img src="assests/verification.png" width="200" /> &nbsp;&nbsp;&nbsp;&nbsp;
+
 </div>
 ![Screenshot_20250410_110315](https://github.com/user-attachments/assets/5b3fc3d0-c79b-4ce7-815c-f14726a347cf)
 ![Screenshot_20250410_110315](https://github.com/user-attachments/assets/ba44317b-9ab2-4b40-ab78-1c35e6125271)
