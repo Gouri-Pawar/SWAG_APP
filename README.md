@@ -1,7 +1,8 @@
 # SWAG_BRAIN 🧠
 > An intelligent quiz application for educational assessment and progress tracking
 
-![SWAG_BRAIN App Banner](https://via.placeholder.com/800x200?text=SWAG_BRAIN)
+![logo](https://github.com/user-attachments/assets/7503c9ed-0e78-47f7-8de6-0c99d53605da)
+
 
 ## 📱 Overview
 
