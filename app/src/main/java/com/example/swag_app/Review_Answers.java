@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class Review_Answers extends AppCompatActivity {
+public class Review_Answers extends BaseActivityStudent {
 
     private RecyclerView recyclerView;
     private FirebaseFirestore db;
@@ -26,8 +26,9 @@ public class Review_Answers extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_review_answers);
-
+        setContentLayout(R.layout.activity_review_answers);
+        setToolbarTitle("Review Answers");
+        setupNavigationDrawer();
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
