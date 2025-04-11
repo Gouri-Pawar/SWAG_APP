@@ -45,6 +45,10 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
         TextView questionText, questionNumber;
         LinearLayout optionsContainer;
 
+        private int correctAnswerIndex;
+        private int userAnswerIndex;
+
+
         public ReviewViewHolder(@NonNull View itemView) {
             super(itemView);
             questionText = itemView.findViewById(R.id.questionText);
@@ -52,43 +56,42 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
             optionsContainer = itemView.findViewById(R.id.optionsContainer);
         }
 
-        public void bind(ReviewModel model, int position, int totalQuestions) {
-            int current = position + 1;
-            questionText.setText(current + ". " + model.getQuestion());
-            questionNumber.setText("Question " + current + " of " + totalQuestions);
-
+        public void bind(ReviewModel model, int position, int size) {
+            questionNumber.setText("Question " + (position + 1) + " of " + size);
+            questionText.setText(model.getQuestion());
             questionText.setTypeface(Typeface.DEFAULT_BOLD);
             optionsContainer.removeAllViews();
 
-            String userAnswer = model.getUserAnswer();
-            String correctAnswer = model.getCorrectAnswer();
             List<String> options = model.getOptions();
+            int correctIndex = model.getCorrectAnswerIndex();
+            int userIndex = model.getUserAnswerIndex();
 
             for (int i = 0; i < options.size(); i++) {
-                String option = options.get(i);
-                char label = (char) ('a' + i); // a, b, c...
-
                 TextView optionView = new TextView(itemView.getContext());
-                optionView.setText(label + ") " + option);
+                optionView.setText((char) ('a' + i) + ") " + options.get(i));
                 optionView.setTextSize(16);
                 optionView.setPadding(8, 8, 8, 8);
 
-                if (option.equals(userAnswer) && option.equals(correctAnswer)) {
+                if (i == userIndex && i == correctIndex) {
+                    // Correct answer selected by user
                     optionView.setTextColor(Color.parseColor("#2E7D32")); // Green
                     optionView.setTypeface(null, Typeface.BOLD_ITALIC);
-                } else if (option.equals(userAnswer)) {
+                } else if (i == userIndex) {
+                    // Wrong answer selected
                     optionView.setTextColor(Color.RED);
                     optionView.setTypeface(null, Typeface.BOLD);
-                } else if (option.equals(correctAnswer)) {
+                } else if (i == correctIndex) {
+                    // Correct answer (not selected)
                     optionView.setTextColor(Color.parseColor("#2E7D32")); // Green
                     optionView.setTypeface(null, Typeface.BOLD_ITALIC);
                 } else {
+                    // Default styling
                     optionView.setTextColor(Color.BLACK);
-                    optionView.setTypeface(null, Typeface.NORMAL);
                 }
 
                 optionsContainer.addView(optionView);
             }
         }
+
     }
 }
