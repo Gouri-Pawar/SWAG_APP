@@ -4,6 +4,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.animation.BounceInterpolator;
 import android.widget.*;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -98,9 +99,11 @@ public class LoginActivity extends AppCompatActivity {
         if ("Admin".equals(role)) {
             showToast("Logged in as Admin");
             startActivity(new Intent(LoginActivity.this, AdminDashboardActivity.class));
+            ActivityAnimationUtil.animateForward(this);
         } else {
             showToast("Logged in as Student");
             startActivity(new Intent(LoginActivity.this, StudentDashboard.class));
+            ActivityAnimationUtil.animateForward(this);
         }
         finish();
     }
@@ -110,13 +113,18 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void animateLoginButton() {
-        ObjectAnimator scaleX = ObjectAnimator.ofFloat(loginButton, "scaleX", 0.9f, 1f);
-        ObjectAnimator scaleY = ObjectAnimator.ofFloat(loginButton, "scaleY", 0.9f, 1f);
-        scaleX.setDuration(200);
-        scaleY.setDuration(200);
+        ObjectAnimator scaleX = ObjectAnimator.ofFloat(loginButton, "scaleX", 0.8f, 1f);
+        ObjectAnimator scaleY = ObjectAnimator.ofFloat(loginButton, "scaleY", 0.8f, 1f);
+        scaleX.setDuration(300);
+        scaleY.setDuration(300);
+
+        // Apply bounce effect
+        scaleX.setInterpolator(new BounceInterpolator());
+        scaleY.setInterpolator(new BounceInterpolator());
 
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.playTogether(scaleX, scaleY);
         animatorSet.start();
     }
+
 }

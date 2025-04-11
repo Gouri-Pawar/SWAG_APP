@@ -23,6 +23,7 @@ public class SignUpActivity extends AppCompatActivity {
     private RadioButton adminRadioButton, studentRadioButton;
     private Button signUpButton;
     private ProgressBar progressBar;
+    TextView loginLink;
 
     private String selectedRole = "Student"; // default
     private static final String ADMIN_CODE = "SGGS_SWAG_2025";
@@ -45,6 +46,7 @@ public class SignUpActivity extends AppCompatActivity {
         studentRadioButton = findViewById(R.id.studentRadioButton);
         signUpButton = findViewById(R.id.signUpButton);
         progressBar = findViewById(R.id.progressBar);
+        loginLink = findViewById(R.id.loginLinkText);
 
         // Firebase
         mAuth = FirebaseAuth.getInstance();
@@ -64,6 +66,11 @@ public class SignUpActivity extends AppCompatActivity {
 
         // SignUp button
         signUpButton.setOnClickListener(v -> attemptSignup());
+
+        loginLink.setOnClickListener(v -> {
+            startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
+            overridePendingTransition(R.anim.slide_in, R.anim.fade_out);
+        });
     }
 
     private void showAdminCodeDialog() {
