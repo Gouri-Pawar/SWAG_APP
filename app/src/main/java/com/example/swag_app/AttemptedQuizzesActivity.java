@@ -1,5 +1,7 @@
 package com.example.swag_app;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -10,8 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class AttemptedQuizzesActivity extends BaseActivityStudent {
 
@@ -20,6 +24,7 @@ public class AttemptedQuizzesActivity extends BaseActivityStudent {
     private List<QuizModel> attemptedQuizzes = new ArrayList<>();
     private FirebaseFirestore db;
     private FirebaseAuth auth;
+    private List<DocumentSnapshot> quizDocuments = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +39,21 @@ public class AttemptedQuizzesActivity extends BaseActivityStudent {
         auth = FirebaseAuth.getInstance();
 
         adapter = new QuizAdapter(attemptedQuizzes, quiz -> {
-            // TODO: handle click to show quiz result/progress
+            // Handle quiz tap: get quizAttempt document and launch ReviewAnswersActivity
+            for (DocumentSnapshot doc : quizDocuments) {
+                if (quiz.getId().equals(doc.getString("quizId"))) {
+                    ArrayList<String> userAnswers = (ArrayList<String>) doc.get("userAnswers");
+                    String quizId = doc.getString("quizId");
+                    String quizTitle = doc.getString("quizTitle");
+
+                    Intent intent = new Intent(AttemptedQuizzesActivity.this, Review_Answers.class);
+                    intent.putExtra("quizId", quizId);
+                    intent.putExtra("quizTitle", quizTitle);
+                    intent.putExtra("userAnswers", userAnswers);  // must implement Serializable or use Parcelable
+                    startActivity(intent);
+                    break;
+                }
+            }
         });
 
         recyclerView.setAdapter(adapter);
@@ -50,6 +69,8 @@ public class AttemptedQuizzesActivity extends BaseActivityStudent {
                 .get()
                 .addOnSuccessListener(querySnapshot -> {
                     attemptedQuizzes.clear();
+                    quizDocuments.clear();
+
                     for (DocumentSnapshot doc : querySnapshot) {
                         String userId = doc.getString("userId");
                         if (currentUserId.equals(userId)) {
@@ -57,6 +78,7 @@ public class AttemptedQuizzesActivity extends BaseActivityStudent {
                             String quizTitle = doc.getString("quizTitle");
                             if (quizId != null && quizTitle != null) {
                                 attemptedQuizzes.add(new QuizModel(quizId, quizTitle));
+                                quizDocuments.add(doc);  // Store the whole document for later reference
                             }
                         }
                     }

@@ -103,6 +103,8 @@ public class AttemptQuiz extends BaseActivityStudent {
             resultData.put("totalQuestions", totalQuestions);
             resultData.put("attempted", attemptedQuestions);
             resultData.put("timestamp", System.currentTimeMillis());
+            resultData.put("userAnswers", new ArrayList<>(userAnswers)); // Added line
+
 
             db.collection("quizAttempts")
                     .add(resultData)
@@ -302,6 +304,7 @@ public class AttemptQuiz extends BaseActivityStudent {
         resultData.put("totalQuestions", totalQuestions);
         resultData.put("attempted", attemptedQuestions);
         resultData.put("timestamp", System.currentTimeMillis());
+        resultData.put("userAnswers", new ArrayList<>(userAnswers)); // Added line
 
         db.collection("quizAttempts")
                 .add(resultData)
