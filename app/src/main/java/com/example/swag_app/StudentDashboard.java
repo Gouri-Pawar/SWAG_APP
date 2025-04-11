@@ -5,12 +5,11 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import androidx.drawerlayout.widget.DrawerLayout;
-
-import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 public class StudentDashboard extends BaseActivityStudent {
 
@@ -86,9 +85,49 @@ public class StudentDashboard extends BaseActivityStudent {
     }
 
     private void loadDashboardData() {
-        // Mock data
-        txtQuizCount.setText("3 quizzes available");
-        txtAttemptedCount.setText("2 quizzes completed");
-        txtAverageScore.setText("Average score: 85%");
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser == null) return;
+
+        String userId = currentUser.getUid();
+
+        // 1. Fetch total quizzes
+        db.collection("quizzes").get()
+                .addOnSuccessListener(querySnapshot -> {
+                    int totalQuizzes = querySnapshot.size();
+                    txtQuizCount.setText(totalQuizzes + " quizzes available");
+                })
+                .addOnFailureListener(e -> txtQuizCount.setText("Quizzes not available"));
+
+        // 2. Fetch attempts by current user from quizAttempts
+        db.collection("quizAttempts")
+                .whereEqualTo("userId", userId)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    int attemptedCount = querySnapshot.size();
+                    double totalPercentage = 0;
+
+                    for (QueryDocumentSnapshot doc : querySnapshot) {
+                        Long score = doc.getLong("score");
+                        Long totalQ = doc.getLong("totalQuestions");
+
+                        if (score != null && totalQ != null && totalQ != 0) {
+                            totalPercentage += (score * 100.0) / totalQ;
+                        }
+                    }
+
+                    txtAttemptedCount.setText(attemptedCount + " quizzes completed");
+
+                    if (attemptedCount > 0) {
+                        double avg = totalPercentage / attemptedCount;
+                        txtAverageScore.setText("Average score: " + Math.round(avg) + "%");
+                    } else {
+                        txtAverageScore.setText("Average score: N/A");
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    txtAttemptedCount.setText("0 quizzes completed");
+                    txtAverageScore.setText("Average score: N/A");
+                });
     }
+
 }
