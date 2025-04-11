@@ -26,7 +26,7 @@ public class SignUpActivity extends AppCompatActivity {
     TextView loginLink;
 
     private String selectedRole = "Student"; // default
-    private static final String ADMIN_CODE = "SGGS_SWAG_2025";
+    private static final String ADMIN_CODE = "SGGS_SWAG@2025";
     private boolean isAdminCodeVerified = false;
 
     private FirebaseAuth mAuth;
