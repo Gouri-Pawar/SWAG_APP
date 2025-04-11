@@ -15,6 +15,10 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -57,9 +61,36 @@ public class MainActivity extends AppCompatActivity {
             }, 300);
         });
 
+        // Delay before checking login status to allow splash animations
         new Handler().postDelayed(() -> {
-            if (progressBar.getVisibility() == View.VISIBLE) {
-                progressBar.setVisibility(View.GONE);
+            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+            if (currentUser != null && currentUser.isEmailVerified()) {
+                FirebaseFirestore.getInstance().collection("users")
+                        .whereEqualTo("email", currentUser.getEmail())
+                        .get()
+                        .addOnSuccessListener(queryDocumentSnapshots -> {
+                            if (!queryDocumentSnapshots.isEmpty()) {
+                                DocumentSnapshot document = queryDocumentSnapshots.getDocuments().get(0);
+                                String role = document.getString("role");
+
+                                Intent intent;
+                                if ("Admin".equals(role)) {
+                                    intent = new Intent(MainActivity.this, AdminDashboardActivity.class);
+                                } else {
+                                    intent = new Intent(MainActivity.this, StudentDashboard.class);
+                                }
+
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                showStartButton();
+                            }
+                        })
+                        .addOnFailureListener(e -> {
+                            e.printStackTrace();
+                            showStartButton();
+                        });
+            } else {
                 showStartButton();
             }
         }, SPLASH_TIMEOUT);
@@ -106,16 +137,10 @@ public class MainActivity extends AppCompatActivity {
         AnimatorSet fullSet = new AnimatorSet();
         fullSet.playSequentially(logoAnimSet, appNameAnimSet, taglineAnimSet);
         fullSet.start();
-
-        // Button show with slight delay after tagline
-        new Handler().postDelayed(this::showStartButton,
-                LOGO_ANIM_DURATION + TEXT_ANIM_DURATION * 2 + 100);
     }
-
 
     private void showStartButton() {
         progressBar.setVisibility(View.GONE);
-
         btnStart.setVisibility(View.VISIBLE);
         btnStart.setAlpha(0f);
         btnStart.setScaleX(0.8f);
@@ -137,7 +162,6 @@ public class MainActivity extends AppCompatActivity {
         set.playTogether(fadeIn, scaleX, scaleY);
         set.start();
     }
-
 
     private void animateButtonClick(View button) {
         ObjectAnimator scaleX = ObjectAnimator.ofFloat(button, "scaleX", 1f, 0.9f, 1f);
