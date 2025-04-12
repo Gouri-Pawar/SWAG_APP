@@ -4,10 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
-import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -18,6 +18,7 @@ public class AdminDashboardActivity extends BaseActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private TextView welcomeText;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +31,13 @@ public class AdminDashboardActivity extends BaseActivity {
         setToolbarTitle("Admin DashBoard");
         setupNavigationDrawer();
         welcomeText = findViewById(R.id.welcomeText);
+        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
+
+        // Set up refresh listener
+        swipeRefreshLayout.setOnRefreshListener(this::loadUserData);
+
+        // Load user data when the activity starts
+        loadUserData();
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null && user.getEmail() != null) {
             String email = user.getEmail();
@@ -67,5 +75,38 @@ public class AdminDashboardActivity extends BaseActivity {
         cardCreateQuiz.setOnClickListener(v -> startActivity(new Intent(this, CreateQuiz.class)));
         cardPastQuizzes.setOnClickListener(v -> startActivity(new Intent(this, PastQuizzes.class)));
         cardTrackProgress.setOnClickListener(v -> startActivity(new Intent(this, TrackProgressActivity.class)));
+    }
+    private void loadUserData() {
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null && user.getEmail() != null) {
+            String email = user.getEmail();
+
+            db.collection("users")
+                    .whereEqualTo("email", email)
+                    .get()
+                    .addOnSuccessListener(querySnapshots -> {
+                        if (!querySnapshots.isEmpty()) {
+                            for (QueryDocumentSnapshot document : querySnapshots) {
+                                String name = email.split("@")[0];
+                                String role = document.getString("role");
+
+                                welcomeText.setText("Welcome " + name + " - " + role);
+                            }
+                        } else {
+                            welcomeText.setText("Welcome " + email.split("@")[0]);
+                        }
+                    })
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(this, "Failed to fetch user info", Toast.LENGTH_SHORT).show();
+                        String name = email.split("@")[0];
+                        welcomeText.setText("Welcome " + name);
+                    })
+                    .addOnCompleteListener(task -> {
+                        // Stop the refresh animation when the data is loaded
+                        swipeRefreshLayout.setRefreshing(false);
+                    });
+        } else {
+            swipeRefreshLayout.setRefreshing(false); // Stop refresh if no user is found
+        }
     }
 }

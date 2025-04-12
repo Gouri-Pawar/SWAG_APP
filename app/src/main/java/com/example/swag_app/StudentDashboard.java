@@ -3,6 +3,7 @@ package com.example.swag_app;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.card.MaterialCardView;
@@ -38,6 +39,16 @@ public class StudentDashboard extends BaseActivityStudent {
         setupClickListeners();
         loadDashboardData();
     }
+    @Override
+    protected void onSwipeToRefresh() {
+        txtQuizCount.setText("Refreshing...");
+        txtAttemptedCount.setText("Refreshing..");
+        txtAverageScore.setText("Refreshing..");
+
+        loadDashboardData();
+        stopRefreshing();
+    }
+
 
     private void initializeViews() {
         drawerLayout = findViewById(R.id.student_drawer_layout);

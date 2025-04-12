@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,11 +31,23 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     protected FirebaseFirestore db;
     protected Toolbar toolbar;
     protected TextView drawerUserName, drawerUserEmail;
+    protected SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_base);
+        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
+
+        swipeRefreshLayout.setColorSchemeResources(
+                R.color.colorPrimary,
+                R.color.colorAccent
+        );
+
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            onSwipeToRefresh(); // Call method to handle refresh
+        });
+
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
@@ -113,4 +126,16 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
+    // Override this in child activities to perform refresh
+    protected void onSwipeToRefresh() {
+        swipeRefreshLayout.setRefreshing(false); // default behavior
+    }
+
+    // Call this when refresh is complete from child
+    protected void stopRefreshing() {
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.setRefreshing(false);
+        }
+    }
+
 }
