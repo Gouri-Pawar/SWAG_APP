@@ -56,7 +56,8 @@ public class Review_Answers extends BaseActivityStudent {
                     if (questions != null && !questions.isEmpty()) {
                         List<ReviewModel> reviewList = new ArrayList<>();
 
-                        for (int i = 0; i < questions.size(); i++) {
+                        int minSize = Math.min(questions.size(), userAnswers.size()); // Avoid out of bounds
+                        for (int i = 0; i < minSize; i++) {
                             Map<String, Object> q = questions.get(i);
 
                             String questionText = (String) q.get("question");

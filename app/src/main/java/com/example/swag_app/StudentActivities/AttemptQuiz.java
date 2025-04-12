@@ -20,7 +20,7 @@ import java.util.Map;
 
 public class AttemptQuiz extends BaseActivityStudent {
 
-    private TextView questionNumberText, questionText;
+    private TextView questionNumberText, questionText, timerTextView;
     private RadioGroup optionsGroup;
     private RadioButton option1, option2, option3, option4;
     private Button prevButton, nextButton, submitButton;
@@ -32,29 +32,31 @@ public class AttemptQuiz extends BaseActivityStudent {
     private String quizTitle = "";
     private CountDownTimer countDownTimer;
     private long timeLeftInMillis = 1 * 60 * 1000; // 1 minute for testing
-    private TextView timerTextView;
+    private boolean isQuizSubmitted = false;
+    private boolean isAppInBackground = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentLayout(com.example.swag_app.R.layout.activity_attempt_quiz);
+        setContentLayout(R.layout.activity_attempt_quiz);
         setToolbarTitle("Solve Quizzes");
         setupNavigationDrawer();
 
-        questionNumberText = findViewById(com.example.swag_app.R.id.questionNumber);
-        questionText = findViewById(com.example.swag_app.R.id.questionText);
-        optionsGroup = findViewById(com.example.swag_app.R.id.optionsGroup);
-        option1 = findViewById(com.example.swag_app.R.id.option1);
-        option2 = findViewById(com.example.swag_app.R.id.option2);
-        option3 = findViewById(com.example.swag_app.R.id.option3);
-        option4 = findViewById(com.example.swag_app.R.id.option4);
-        prevButton = findViewById(com.example.swag_app.R.id.prevButton);
-        nextButton = findViewById(com.example.swag_app.R.id.nextButton);
-        submitButton = findViewById(com.example.swag_app.R.id.submitButton);
+        questionNumberText = findViewById(R.id.questionNumber);
+        questionText = findViewById(R.id.questionText);
+        optionsGroup = findViewById(R.id.optionsGroup);
+        option1 = findViewById(R.id.option1);
+        option2 = findViewById(R.id.option2);
+        option3 = findViewById(R.id.option3);
+        option4 = findViewById(R.id.option4);
+        prevButton = findViewById(R.id.prevButton);
+        nextButton = findViewById(R.id.nextButton);
+        submitButton = findViewById(R.id.submitButton);
         timerTextView = findViewById(R.id.timerTextView);
+
         startTimer();
 
         quizId = getIntent().getStringExtra("quizId");
-
 
         if (quizId != null) {
             checkIfAlreadyAttempted();
@@ -81,47 +83,11 @@ public class AttemptQuiz extends BaseActivityStudent {
         });
 
         submitButton.setOnClickListener(v -> {
-            saveAnswer();
-
-            int totalQuestions = questionsList.size();
-            int correctAnswers = calculateScore();
-            int attemptedQuestions = calculateAttempted();
-
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            if (user == null) {
-                Toast.makeText(this, "User not authenticated", Toast.LENGTH_SHORT).show();
-                return;
+            if (!isQuizSubmitted) {
+                isQuizSubmitted = true;
+                saveAnswer();
+                submitQuiz();
             }
-
-            String uid = user.getUid();
-
-            Map<String, Object> resultData = new HashMap<>();
-            resultData.put("userId", uid);
-            resultData.put("email", user.getEmail());
-            resultData.put("quizId", quizId);
-            resultData.put("quizTitle", quizTitle);
-            resultData.put("score", correctAnswers);
-            resultData.put("totalQuestions", totalQuestions);
-            resultData.put("attempted", attemptedQuestions);
-            resultData.put("timestamp", System.currentTimeMillis());
-            resultData.put("userAnswers", new ArrayList<>(userAnswers)); // Added line
-
-
-            db.collection("quizAttempts")
-                    .add(resultData)
-                    .addOnSuccessListener(documentReference -> {
-                        Toast.makeText(this, "Result stored", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(AttemptQuiz.this, ResultActivity.class);
-                        intent.putExtra("score", correctAnswers);
-                        intent.putExtra("totalQuestions", totalQuestions);
-                        intent.putExtra("attempted", attemptedQuestions);
-                        startActivity(intent);
-                        finish();
-                    })
-                    .addOnFailureListener(e -> {
-                        Toast.makeText(this, "Error storing result: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    });
         });
     }
 
@@ -258,6 +224,7 @@ public class AttemptQuiz extends BaseActivityStudent {
             default: return -1;
         }
     }
+
     private void startTimer() {
         countDownTimer = new CountDownTimer(timeLeftInMillis, 1000) {
             @Override
@@ -268,8 +235,11 @@ public class AttemptQuiz extends BaseActivityStudent {
 
             @Override
             public void onFinish() {
-                Toast.makeText(AttemptQuiz.this, "Time's up! Submitting quiz...", Toast.LENGTH_LONG).show();
-                submitQuizAutomatically();
+                if (!isQuizSubmitted) {
+                    isQuizSubmitted = true;
+                    Toast.makeText(AttemptQuiz.this, "Time's up! Submitting quiz...", Toast.LENGTH_LONG).show();
+                    submitQuiz();
+                }
             }
         }.start();
     }
@@ -281,7 +251,7 @@ public class AttemptQuiz extends BaseActivityStudent {
         timerTextView.setText(timeFormatted);
     }
 
-    private void submitQuizAutomatically() {
+    private void submitQuiz() {
         saveAnswer();
 
         int totalQuestions = questionsList.size();
@@ -306,7 +276,7 @@ public class AttemptQuiz extends BaseActivityStudent {
         resultData.put("totalQuestions", totalQuestions);
         resultData.put("attempted", attemptedQuestions);
         resultData.put("timestamp", System.currentTimeMillis());
-        resultData.put("userAnswers", new ArrayList<>(userAnswers)); // Added line
+        resultData.put("userAnswers", new ArrayList<>(userAnswers));
 
         db.collection("quizAttempts")
                 .add(resultData)
@@ -322,6 +292,31 @@ public class AttemptQuiz extends BaseActivityStudent {
                     Toast.makeText(this, "Error storing result: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
+
+    @Override
+    protected void onUserLeaveHint() {
+        super.onUserLeaveHint();
+        if (!isQuizSubmitted) {
+            isAppInBackground = true;
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (isAppInBackground && !isQuizSubmitted) {
+            Toast.makeText(this, "You left the quiz. Submitting automatically...", Toast.LENGTH_SHORT).show();
+            isQuizSubmitted = true;
+            submitQuiz();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isAppInBackground = false;
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -329,5 +324,4 @@ public class AttemptQuiz extends BaseActivityStudent {
             countDownTimer.cancel();
         }
     }
-
 }
