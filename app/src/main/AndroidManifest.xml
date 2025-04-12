@@ -13,7 +13,7 @@
         android:theme="@style/Theme.SWAG_APP"
         tools:targetApi="31">
         <activity
-            android:name=".Review_Answers"
+            android:name=".StudentActivities.Review_Answers"
             android:exported="false" />
         <activity
             android:name=".BaseActivityStudent"
@@ -22,43 +22,43 @@
             android:name=".BaseActivity"
             android:exported="false" />
         <activity
-            android:name=".QuizDetailsActivity"
+            android:name=".StudentActivities.QuizDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".TrackProgressActivity"
+            android:name=".AdminActivities.TrackProgressActivity"
             android:exported="false" />
         <activity
-            android:name=".ResultActivity"
+            android:name=".StudentActivities.ResultActivity"
             android:exported="false" />
         <activity
-            android:name=".AttemptQuiz"
+            android:name=".StudentActivities.AttemptQuiz"
             android:exported="false" />
         <activity
-            android:name=".ViewScoresActivity"
+            android:name=".StudentActivities.ViewScoresActivity"
             android:exported="false" />
         <activity
-            android:name=".AttemptedQuizzesActivity"
+            android:name=".StudentActivities.AttemptedQuizzesActivity"
             android:exported="false" />
         <activity
-            android:name=".AvailableQuizzesActivity"
+            android:name=".StudentActivities.AvailableQuizzesActivity"
             android:exported="false" />
         <activity
-            android:name=".AddQuestionsActivity"
+            android:name=".AdminActivities.AddQuestionsActivity"
             android:exported="false" />
         <activity
-            android:name=".QuizQuestions"
+            android:name=".AdminActivities.QuizQuestions"
             android:exported="false" />
         <activity
-            android:name=".PastQuizzes"
+            android:name=".AdminActivities.PastQuizzes"
             android:exported="false" />
         <activity
-            android:name=".CreateQuiz"
+            android:name=".AdminActivities.CreateQuiz"
             android:exported="false" />
         <activity
-            android:name=".AdminDashboardActivity"
+            android:name=".AdminActivities.AdminDashboardActivity"
             android:exported="false" />
         <activity
-            android:name=".StudentDashboard"
+            android:name=".StudentActivities.StudentDashboard"
             android:exported="false" />
         <activity
             android:name=".SignUpActivity"
@@ -67,7 +67,7 @@
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".QuizProgressActivity"
+            android:name=".AdminActivities.QuizProgressActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

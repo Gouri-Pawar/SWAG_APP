@@ -1,8 +1,10 @@
-package com.example.swag_app;
+package com.example.swag_app.StudentActivities;
 
 import android.os.Bundle;
 import android.widget.TextView;
-import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.swag_app.BaseActivityStudent;
+import com.example.swag_app.R;
 
 public class ResultActivity extends BaseActivityStudent {
 

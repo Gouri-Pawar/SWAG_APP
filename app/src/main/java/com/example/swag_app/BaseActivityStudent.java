@@ -17,6 +17,9 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.swag_app.StudentActivities.AvailableQuizzesActivity;
+import com.example.swag_app.StudentActivities.StudentDashboard;
+import com.example.swag_app.StudentActivities.ViewScoresActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

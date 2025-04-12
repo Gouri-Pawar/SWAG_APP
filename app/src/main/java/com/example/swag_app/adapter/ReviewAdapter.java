@@ -1,4 +1,4 @@
-package com.example.swag_app;
+package com.example.swag_app.adapter;
 
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.swag_app.R;
+import com.example.swag_app.model.ReviewModel;
 
 import java.util.List;
 

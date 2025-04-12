@@ -1,17 +1,18 @@
-package com.example.swag_app;
+package com.example.swag_app.StudentActivities;
 
 import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.swag_app.ReviewModel;
+import com.example.swag_app.BaseActivityStudent;
+import com.example.swag_app.R;
+import com.example.swag_app.adapter.ReviewAdapter;
+import com.example.swag_app.model.ReviewModel;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

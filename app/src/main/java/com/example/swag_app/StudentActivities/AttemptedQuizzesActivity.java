@@ -1,21 +1,21 @@
-package com.example.swag_app;
+package com.example.swag_app.StudentActivities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.swag_app.BaseActivityStudent;
+import com.example.swag_app.R;
+import com.example.swag_app.adapter.QuizAdapter;
+import com.example.swag_app.model.QuizModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.*;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class AttemptedQuizzesActivity extends BaseActivityStudent {
 
@@ -29,7 +29,7 @@ public class AttemptedQuizzesActivity extends BaseActivityStudent {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentLayout(R.layout.activity_attempted_quizzes);
+        setContentLayout(com.example.swag_app.R.layout.activity_attempted_quizzes);
 
         recyclerView = findViewById(R.id.recyclerViewAttempted);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

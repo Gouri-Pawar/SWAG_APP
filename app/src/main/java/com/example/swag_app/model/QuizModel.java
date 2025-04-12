@@ -1,4 +1,4 @@
-package com.example.swag_app;
+package com.example.swag_app.model;
 
 public class QuizModel {
         private String id;

@@ -1,6 +1,8 @@
-package com.example.swag_app;
+package com.example.swag_app.util;
 
 import android.app.Activity;
+
+import com.example.swag_app.R;
 
 public class ActivityAnimationUtil {
 

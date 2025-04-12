@@ -1,19 +1,12 @@
-package com.example.swag_app;
+package com.example.swag_app.AdminActivities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.*;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import com.google.android.material.navigation.NavigationView;
+
+import com.example.swag_app.BaseActivity;
+import com.example.swag_app.R;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.*;
 
 import java.util.*;
@@ -32,7 +25,7 @@ public class CreateQuiz extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentLayout(R.layout.activity_create_quiz);
+        setContentLayout(com.example.swag_app.R.layout.activity_create_quiz);
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
@@ -40,14 +33,14 @@ public class CreateQuiz extends BaseActivity {
         setToolbarTitle("Create Quiz");
         setupNavigationDrawer();
         // UI components
-        quizTitle = findViewById(R.id.quizTitle);
-        questionInput = findViewById(R.id.questionInput);
-        optionA = findViewById(R.id.optionA);
-        optionB = findViewById(R.id.optionB);
-        optionC = findViewById(R.id.optionC);
-        optionD = findViewById(R.id.optionD);
-        correctAnswerSpinner = findViewById(R.id.correctAnswerSpinner);
-        addQuestionButton = findViewById(R.id.addQuestionButton);
+        quizTitle = findViewById(com.example.swag_app.R.id.quizTitle);
+        questionInput = findViewById(com.example.swag_app.R.id.questionInput);
+        optionA = findViewById(com.example.swag_app.R.id.optionA);
+        optionB = findViewById(com.example.swag_app.R.id.optionB);
+        optionC = findViewById(com.example.swag_app.R.id.optionC);
+        optionD = findViewById(com.example.swag_app.R.id.optionD);
+        correctAnswerSpinner = findViewById(com.example.swag_app.R.id.correctAnswerSpinner);
+        addQuestionButton = findViewById(com.example.swag_app.R.id.addQuestionButton);
         submitQuizButton = findViewById(R.id.submitQuizButton);
 
         // Spinner options

@@ -1,15 +1,17 @@
-package com.example.swag_app;
+package com.example.swag_app.StudentActivities;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.swag_app.BaseActivityStudent;
+import com.example.swag_app.R;
+import com.example.swag_app.adapter.QuizResultAdapter;
+import com.example.swag_app.model.QuizResultModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 

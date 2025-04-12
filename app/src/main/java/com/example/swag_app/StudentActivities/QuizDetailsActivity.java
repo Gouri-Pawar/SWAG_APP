@@ -1,12 +1,12 @@
-package com.example.swag_app;
+package com.example.swag_app.StudentActivities;
 
 import android.os.Bundle;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import com.example.swag_app.BaseActivityStudent;
+import com.example.swag_app.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.*;
 
@@ -27,7 +27,7 @@ public class QuizDetailsActivity extends BaseActivityStudent {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentLayout(R.layout.activity_quiz_details);
+        setContentLayout(com.example.swag_app.R.layout.activity_quiz_details);
         setToolbarTitle("Congratulations !");
         setupNavigationDrawer();
         // Initialize Firebase
@@ -35,13 +35,13 @@ public class QuizDetailsActivity extends BaseActivityStudent {
         auth = FirebaseAuth.getInstance();
 
         // Initialize views
-        tvQuizTitle = findViewById(R.id.tvQuizTitle);
-        tvAttemptedCount = findViewById(R.id.tvAttemptedCount);
-        tvCorrectCount = findViewById(R.id.tvCorrectCount);
-        tvIncorrectCount = findViewById(R.id.tvIncorrectCount);
-        tvCorrectPercentage = findViewById(R.id.tvCorrectPercentage);
-        tvIncorrectPercentage = findViewById(R.id.tvIncorrectPercentage);
-        progressCorrect = findViewById(R.id.progressCorrect);
+        tvQuizTitle = findViewById(com.example.swag_app.R.id.tvQuizTitle);
+        tvAttemptedCount = findViewById(com.example.swag_app.R.id.tvAttemptedCount);
+        tvCorrectCount = findViewById(com.example.swag_app.R.id.tvCorrectCount);
+        tvIncorrectCount = findViewById(com.example.swag_app.R.id.tvIncorrectCount);
+        tvCorrectPercentage = findViewById(com.example.swag_app.R.id.tvCorrectPercentage);
+        tvIncorrectPercentage = findViewById(com.example.swag_app.R.id.tvIncorrectPercentage);
+        progressCorrect = findViewById(com.example.swag_app.R.id.progressCorrect);
         progressIncorrect = findViewById(R.id.progressIncorrect);
 
         // Get quiz name from intent

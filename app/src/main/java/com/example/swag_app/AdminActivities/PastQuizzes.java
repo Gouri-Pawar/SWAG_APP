@@ -1,32 +1,23 @@
-package com.example.swag_app;
+package com.example.swag_app.AdminActivities;
 
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-
+import com.example.swag_app.BaseActivity;
+import com.example.swag_app.R;
+import com.example.swag_app.util.ActivityAnimationUtil;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PastQuizzes extends BaseActivity{
+public class PastQuizzes extends BaseActivity {
 
     private FirebaseFirestore db;
     private ListView quizListView;
@@ -38,13 +29,13 @@ public class PastQuizzes extends BaseActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentLayout(R.layout.activity_past_quizzes);
+        setContentLayout(com.example.swag_app.R.layout.activity_past_quizzes);
         setToolbarTitle("Previous Quizzes");
         setupNavigationDrawer();
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-        quizListView = findViewById(R.id.pastQuizzesListView);
+        quizListView = findViewById(com.example.swag_app.R.id.pastQuizzesListView);
         addQuestionFab = findViewById(R.id.addQuestionFab);
 
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, quizTitles);

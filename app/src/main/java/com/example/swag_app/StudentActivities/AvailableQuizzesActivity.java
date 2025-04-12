@@ -1,4 +1,4 @@
-package com.example.swag_app;
+package com.example.swag_app.StudentActivities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,10 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.swag_app.BaseActivityStudent;
+import com.example.swag_app.R;
+import com.example.swag_app.adapter.QuizAdapter;
+import com.example.swag_app.model.QuizModel;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;

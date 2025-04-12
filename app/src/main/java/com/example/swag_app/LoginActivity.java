@@ -9,6 +9,9 @@ import android.widget.*;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.swag_app.AdminActivities.AdminDashboardActivity;
+import com.example.swag_app.StudentActivities.StudentDashboard;
+import com.example.swag_app.util.ActivityAnimationUtil;
 import com.google.firebase.auth.*;
 import com.google.firebase.firestore.*;
 

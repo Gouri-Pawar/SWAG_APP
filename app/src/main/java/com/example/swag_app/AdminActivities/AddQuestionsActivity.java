@@ -1,4 +1,4 @@
-package com.example.swag_app;
+package com.example.swag_app.AdminActivities;
 
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -7,8 +7,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import com.example.swag_app.BaseActivity;
+import com.example.swag_app.R;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 

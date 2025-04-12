@@ -1,11 +1,14 @@
-package com.example.swag_app;
+package com.example.swag_app.StudentActivities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.drawerlayout.widget.DrawerLayout;
+
+import com.example.swag_app.BaseActivityStudent;
+import com.example.swag_app.R;
+import com.example.swag_app.util.ActivityAnimationUtil;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;

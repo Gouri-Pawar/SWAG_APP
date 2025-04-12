@@ -1,4 +1,4 @@
-package com.example.swag_app;
+package com.example.swag_app.AdminActivities;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -7,8 +7,9 @@ import android.util.Log;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import com.example.swag_app.BaseActivity;
+import com.example.swag_app.R;
+import com.example.swag_app.adapter.QuizQuestionAdapter;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;

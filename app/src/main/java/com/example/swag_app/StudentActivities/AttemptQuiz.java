@@ -1,4 +1,4 @@
-package com.example.swag_app;
+package com.example.swag_app.StudentActivities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AlertDialog;
 
+import com.example.swag_app.BaseActivityStudent;
+import com.example.swag_app.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.*;
@@ -34,20 +36,20 @@ public class AttemptQuiz extends BaseActivityStudent {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentLayout(R.layout.activity_attempt_quiz);
+        setContentLayout(com.example.swag_app.R.layout.activity_attempt_quiz);
         setToolbarTitle("Solve Quizzes");
         setupNavigationDrawer();
 
-        questionNumberText = findViewById(R.id.questionNumber);
-        questionText = findViewById(R.id.questionText);
-        optionsGroup = findViewById(R.id.optionsGroup);
-        option1 = findViewById(R.id.option1);
-        option2 = findViewById(R.id.option2);
-        option3 = findViewById(R.id.option3);
-        option4 = findViewById(R.id.option4);
-        prevButton = findViewById(R.id.prevButton);
-        nextButton = findViewById(R.id.nextButton);
-        submitButton = findViewById(R.id.submitButton);
+        questionNumberText = findViewById(com.example.swag_app.R.id.questionNumber);
+        questionText = findViewById(com.example.swag_app.R.id.questionText);
+        optionsGroup = findViewById(com.example.swag_app.R.id.optionsGroup);
+        option1 = findViewById(com.example.swag_app.R.id.option1);
+        option2 = findViewById(com.example.swag_app.R.id.option2);
+        option3 = findViewById(com.example.swag_app.R.id.option3);
+        option4 = findViewById(com.example.swag_app.R.id.option4);
+        prevButton = findViewById(com.example.swag_app.R.id.prevButton);
+        nextButton = findViewById(com.example.swag_app.R.id.nextButton);
+        submitButton = findViewById(com.example.swag_app.R.id.submitButton);
         timerTextView = findViewById(R.id.timerTextView);
         startTimer();
 
